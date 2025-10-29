@@ -257,5 +257,44 @@
 // small script to fill the year, safe to keep even though user asked HTML/CSS only
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script>
+  // Dynamic year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // --- 1. Scroll animation for fade-in sections ---
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.card, .project, .skills, .intro, .profile-card').forEach(el => {
+    el.classList.add('hidden');
+    observer.observe(el);
+  });
+
+  // --- 2. Floating animation for avatar card ---
+  const avatar = document.querySelector('.profile-card');
+  let floatY = 0, direction = 1;
+  function floatEffect() {
+    floatY += direction * 0.3;
+    avatar.style.transform = `translateY(${Math.sin(floatY / 10) * 5}px)`;
+    requestAnimationFrame(floatEffect);
+  }
+  floatEffect();
+
+  // --- 3. Rotate logo on hover ---
+  const logo = document.querySelector('.logo');
+  logo.addEventListener('mouseenter', () => {
+    logo.style.transition = 'transform 0.6s ease';
+    logo.style.transform = 'rotate(360deg)';
+  });
+  logo.addEventListener('mouseleave', () => {
+    logo.style.transform = 'rotate(0deg)';
+  });
+</script>
+
 </body>
 </html>
